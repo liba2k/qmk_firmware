@@ -37,8 +37,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_ortho_5x14(
       KC_ESC ,  KC_GRV , KC_1    , KC_2   , KC_3   , KC_4   , KC_5   ,     KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , KC_DEL , KC_BSPC,
       KC_TAB , KC_Q    , KC_W    , KC_E   , KC_R   , KC_T   , _______,     KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_LBRC, KC_RBRC,
-      QK_LOCK, KC_A    , KC_S    , KC_D   , KC_F   , KC_G   , _______,     KC_H   , KC_J   , KC_K   , KC_L   , KC_SCLN, KC_QUOT, KC_MINS,
-      KC_LSFT, KC_Z    , KC_X    , KC_C   , KC_V   , KC_B   , _______,     KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_UP  ,  MT(MOD_RSFT, KC_ENT),
+      QK_LOCK, KC_A    , KC_S    , KC_D   , KC_F   , KC_G   , _______,     KC_H   , KC_J   , KC_K   , KC_L   , KC_SCLN, KC_QUOT, MT(MOD_RSFT, KC_MINS),
+      KC_LSFT, KC_Z    , KC_X    , KC_C   , KC_V   , KC_B   , _______,     KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_UP  ,  KC_ENT,
       ADJUST,  KC_LCTL , KC_LALT , KC_LGUI, LOWER  , KC_SPC , KC_SPC ,     KC_SPC , KC_SPC , RAISE  , KC_BSLS, KC_LEFT, KC_DOWN,  KC_RGHT
   ),
 
@@ -77,7 +77,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `------------------------------------------------'      `------------------------------------------------'
  */
   [_RAISE] = LAYOUT_ortho_5x14(
-    _______, KC_TILD, KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  ,     KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10 , KC_F11 , KC_F12 ,
+    _______, KC_TILD, KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  ,     KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10 , KC_F11 , KC_BSPC ,
     KC_UNDS, _______, KC_1   , KC_2   , KC_3   , KC_4   , KC_5   ,     KC_KP_7, KC_KP_8, KC_KP_9, KC_KP_ASTERISK, KC_0   , KC_LCBR, KC_RCBR,
     KC_PLUS, _______, KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  ,     KC_KP_4, KC_KP_5, KC_KP_6, KC_KP_MINUS, KC_RBRC, KC_MUTE, KC_UNDS,
     _______, _______, KC_F7  , KC_F8  , KC_F9  , KC_F10 , KC_F11 ,     KC_KP_1, KC_KP_2, KC_KP_3,KC_KP_PLUS, RAISE, KC_VOLU, KC_EQL,
@@ -87,9 +87,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_ADJUST] = LAYOUT_ortho_5x14(
     _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,       KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______,
     _______, _______, QK_BOOT, UG_TOGG, UG_NEXT, UG_HUED, UG_HUEU,     UG_SATD, UG_SATU, UG_VALD, UG_VALU, _______, KC_DEL,  _______,
-    _______, _______, _______, _______, AU_ON,   AU_OFF,  AG_NORM,     AG_SWAP, _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, AU_ON,   AU_OFF,  AG_NORM,     _______, _______, _______, _______, _______, _______, _______,
     _______, _______, _______, _______, _______, _______, _______,     _______, _______, _______, _______, _______, _______, _______,
-    _______, _______, _______, _______, _______, _______, _______,     _______, _______, _______, _______, _______, _______, _______
+    _______, _______, _______, _______, _______, _______, _______,     _______, _______, _______, _______, _______, _______, AG_SWAP
   )
 
 };
@@ -116,7 +116,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             other_key_pressed = false;
             layer_on(_RAISE);
         } else {
-            if (other_key_pressed || timer_elapsed(my_layer_timer) < TAPPING_TERM) {
+            if (other_key_pressed || timer_elapsed(my_layer_timer) < TAPPING_TERM * 10) {
                 layer_off(_RAISE);
             }
         }
